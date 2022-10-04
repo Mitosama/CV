@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+    --main-color: #354259;
+    --secondary-color: #F1F1F4;
+    --lighter-blue: #9CB4CC;
+    --tooltip-bg: #748DA6;
+    }
+    /* Main Page */
+    .main-page {
+        width: 50%;
+        min-width: 800px;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--secondary-color);
+        border-radius: 6px;
+    }
+    .section {
+        padding: 24px;
+    }
+    .section-header {
+        margin-bottom: 10px;
+    }
+    .section-label {
+        font-size: 25px;
+        font-weight: 600;
+        background-color: var(--main-color);
+        color: var(--secondary-color);
+        padding: 4px 24px 4px 8px;
+        border-radius: 5px 0px;
+    }
+    .section-content {
+        border-radius: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    /* Title */
+    .title {
+        text-align: center;
+    }
+    /* Contact */
+    .contact {
+        display: flex;
+    }
+    .contact-item {
+        height: 30px;
+        margin-right: 20px;
+    }
+    .contact-item-details {
+        padding: 0px 10px 0px 8px;
+        /* display: flex;
+        align-items: center;
+        justify-content: center; */
+        position: relative;
+        background-color: var(--main-color);
+        border-radius: 15px;
+        color: var(--secondary-color);
+        height: 30px;
+    }
+    .image-container {
+        margin-right: 10px;
+        /* display: flex;
+        align-items: center;
+        justify-content: center; */
+        position: absolute;
+        left: 0;
+        top: -5px;
+        background-color: var(--secondary-color);
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--main-color);
+    }
+    .contact-item-details span {
+        margin-left: 40px;
+        line-height: 30px;
+        font-size: 14px;
+        vertical-align: middle;
+    }
+    .contact img {
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        left: 11px;
+        top: 6px;
+    }
+    /* About Me */
+    #personal-details-content table {
+        width: 100%;
+        font-size: 20px;
+        border-collapse: collapse;
+    }
+    #personal-details-content table td {
+        vertical-align: top;
+        padding: 5px;
+        padding-top: 16px;
+    }
+    #personal-details-content table td:first-child {
+        width: 15%;
+        font-weight: 700;
+        padding-top: 16px;
+    }
+    .position-details {
+        border-radius: 5px;
+        padding: 8px 12px;
+        background-color: var(--tooltip-bg);
+        position: relative;
+        display: inline-block;
+        color: var(--secondary-color);
+    }
+    .tooltip {
+        display: none;
+        position: absolute;
+        min-width: 400px;
+        background-color: var(--tooltip-bg);
+        color: var(--secondary-color);
+        top: 100%;
+        left: 0;
+        margin: 10px 0px;
+        padding: 10px;
+        border-radius: 5px;
+        z-index: 3;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
+    }
+    .tooltip::after {
+        content: " ";
+        position: absolute;
+        bottom: 100%;
+        left: 50px;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: transparent transparent var(--tooltip-bg) transparent;
+    }
+    /* Skills */
+    .score {
+        width: 300px;
+        height: 30px;
+        border-radius: 5px;
+        border: 2px solid var(--main-color);
+        position: relative;
+        overflow: hidden;
+        margin-left: 16px;
+    }
+    .subskill-title {
+        padding-left: 16px;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: 700;
+    }
+    .score span {
+        height: 28px;
+        margin: 1px 1px 1px 1px;
+        padding: 0 5px 0 0;
+        border-radius: 5px 0 0 5px;
+        width: 0;
+        background-color: #9CB4CC;
+        line-height: 28px;
+        position: absolute;
+        text-align: end;
+        color: var(--main-color);
+    }
+    .skill-tooltip {
+        position: relative;
+        z-index: 4;
+        line-height: 14px;
+    }
+    .skill-tooltip-text {
+        position: absolute;
+        line-height: 20px;
+        font-size: 14px;
+        width: 200px;
+        left: 0;
+        top: 25px;
+        background-color: var(--tooltip-bg);
+        color: var(--secondary-color);
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+    }
+    .info-image {
+        margin-left:2px;
+        height: 14px;
+        width: 14px;
+    }
+    /* Biography - Project */
+    #biography-content, #project-content {
+        background-color: var(--main-color);
+        padding-top: 20px;
+        padding-bottom: 40px;
+    }
+    .switch-button-left, .switch-button-right {
+        border: 1px solid var(--secondary-color);
+        border-radius: 2px;
+        padding: 4px 8px;
+    }
+    .switch-button-left:hover, .switch-button-right:hover {
+        background-color: var(--secondary-color);
+        color: var(--main-color);
+    }
+    .switch-button-left:active, .switch-button-right:active {
+        transform: translateY(2px);
+    }
+    #biography-header td:last-child label, #project-header td:last-child label {
+        float: right;
+    }
+    #biography-header td:first-child label, #project-header td:first-child label {
+        float: left;
+    }
+    /* Tabs */
+    .tabs-container {
+        height: 50px;
+        display: flex;
+    }
+    .tab-details {
+        height: 40px;
+        min-width: 100px;
+        border-radius: 5px 5px 0 0;
+        color: black;
+        font-size: 23px;
+        line-height: 50px;
+        text-align: center;
+        padding: 0 10px 0 10px;
+        margin: 8px 5px 0 3px;
+        border: 1px solid black;
+        border-bottom-color: transparent;
+    }
+    .tab-selected {
+        height: 50px;
+        font-size: 25px;
+        background-color: var(--main-color);
+        border: none;
+        color: var(--secondary-color);
+        margin: 0px 5px 0 3px;
+    }
+    /* Timeline */
+    .timeline {
+        position: relative;
+        width: 100%;
+    }
+    .timeline::after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        background-color: #fff;
+        left: calc(50% + 6px);
+        margin-left: -3px;
+        top: 0;
+        bottom: 0;
+    }
+    .container {
+        padding: 10px 40px;
+        position: relative;
+        background-color: inherit;
+        width: calc(50% - 75px);
+    }
+    .container::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        right: -17px;
+        background-color: var(--lighter-blue);;
+        border: 4px solid white;
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+    }
+    .timeline-left {
+        left: 0;
+    }
+    .timeline-left::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        right: 30px;
+        border: medium solid white;
+        border-width: 10px 0 10px 10px;
+        border-color: transparent transparent transparent var(--secondary-color);
+    }
+    .timeline-right {
+        left: calc(50% + 5px);
+    }
+    .timeline-right::after {
+        left: -16px;
+    }
+    .timeline-right::before {
+        content: " ";
+        height: 0;
+        position: absolute;
+        top: 22px;
+        width: 0;
+        z-index: 1;
+        left: 30px;
+        border: medium solid white;
+        border-width: 10px 10px 10px 0;
+        border-color: transparent var(--secondary-color) transparent transparent;
+    }
+    .content {
+        padding: 16px 16px;
+        background-color: var(--secondary-color);
+        position: relative;
+        border-radius: 6px;
+    }
+    .content p {
+        line-height: normal;
+    }
+    .content h2 {
+        margin-top: 0px;
+    }
+    .content h3 {
+        font-size: 16px;
+        margin-top: -16px;
+        font-weight: lighter;
+    }
+    /* Projects */
+    .project-details {
+        background-color: var(--main-color);
+        color: var(--secondary-color);
+        margin-top: 20px;
+        padding: 10px 0 10px 0
+    }
+    .project-details label {
+        font-size: 20px;
+        font-weight: 600;
+        padding: 10px 0 10px 10px;
+        margin: 10px;
+    }
+    .project-details img {
+        margin-right: 10px;
+        margin-top: 3px;
+        height: 20px;
+        width: 20px;;
+    }
+    .project-details table {
+        margin: 10px 0 0 20px;
+        width: 100%;
+    }
+    .project-details td {
+        line-height: 28px;
+    }
+    .project-details td:first-child {
+        width: 30%
+    }
+    .project-details td:last-child {
+        width: 50%
+    }
+    .project-details p {
+        margin: 10px 0 0 20px;
+        font-size: 16px;
+        line-height: 22px;
+    }
+    .position-image {
+        border: 0.5px solid var(--secondary-color);
+        border-radius: 50%;
+    }
+    .project-attribute {
+        display: flex;
+        align-items: flex-start;
+        vertical-align: middle;
+    }
+  </style>>
+</head>
+<body>
+  <!-- <div class="main-page" style="display: none"> -->
+  <div class="main-page">
+    <div class="title">
+      <h2 style="font-size: xx-large;">VU QUANG DUY</h2>
+      <p style="margin-top: -16px;">Business Analyst</p>
+    </div>
+    <div class="section">
+      <div class="contact">
+        <div class="contact-item">
+          <div class="contact-item-details">
+            <div class="image-container"></div>
+            <img src="https://raw.githubusercontent.com/Mitosama/CV/main/phone%20354259.svg">
+            <span>097 659 78 89</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-details">
+            <div class="image-container"></div>
+            <img src="https://raw.githubusercontent.com/Mitosama/CV/main/email%20354259.svg">
+            <span>duyvq1989@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-details">
+            <div class="image-container"></div>
+            <img src="https://raw.githubusercontent.com/Mitosama/CV/main/skype%20354259.svg">
+            <span>mitovu</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="personal-details">
+      <div class="section-header" id="personal-details-header">
+        <label class="section-label">About Me</label>
+        <img>
+      </div>
+      <div class="section-content" id="personal-details-content">
+        <table>
+          <tr><td>DOB</td><td>01/12/1989</td></tr>
+          <tr><td>Location</td><td>Ho Chi Minh City</td></tr>
+          <tr><td>Overview</td><td>A dedicated employee who always takes the job seriously and is
+              eager to learn new things. After working as an accountant for
+              more than 3 years, I moved my career to IT field and worked in
+              several positions, mainly Business Analyst. Since then, I have
+              worked in several projects in different domains.</td></tr>
+          <tr><td style="vertical-align: middle">Positions</td>
+            <td>
+              <div class="position-details" id="position-1">
+                Business Analyst
+                <span class="tooltip" id="position-1-tooltip">
+                  Responsibility
+                  <ul>
+                    <li>Elicit requirements from stakeholders</li>
+                    <li>Analyze requirements</li>
+                    <li>Develop solutions and create mockups if required</li>
+                    <li>Collaborate with developers and testers to get
+                      requirements done</li>
+                    <li>Create documents to support requirements tracking
+                      (user stories, system/feature description) and to
+                      support users (user guides)</li>
+                    <li>Participate in planning (sprints, road map …)</li>
+                    <li>Perform UAT before features and improvements are
+                      deployed to production</li>
+                    <li>Support creating proposals</li>
+                  </ul>
+                </span>
+              </div>
+              <div class="position-details" id="position-2">
+                Scrum Master
+                <span class="tooltip" id="position-2-tooltip">
+                  Responsibility
+                  <ul>
+                    <li>Manage and prioritize backlog</li>
+                    <li>Manage sprint tickets and progression</li>
+                    <li>Participate in sprint planning</li>
+                    <li>Host daily meeting</li>
+                  </ul>
+                </span>
+              </div>
+
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-header" id="skills-header">
+        <label class="section-label">Skills</label>
+      </div>
+      <div class="section-content" id="skills-content">
+        <div style="margin-top: 24px;">
+          <label class="subskill-title">Main Skills</label>
+          <table style="margin-left: 24px;">
+            <tr><td>Eliciting Requirements</td><td><div class="score"><span score="80"></span></div></td></tr>
+            <tr><td>Analyzing Requirements</td><td><div class="score"><span score="90"></span></div></td></tr>
+            <tr><td>Refining Requirements</td><td><div class="score"><span score="90"></span></div></td></tr>
+            <tr><td>Managing Requirements</td><td><div class="score"><span score="80"></span></div></td></tr>
+            <tr><td>Communicating Requirements</td><td><div class="score"><span score="70"></span></div></td></tr>
+          </table>
+        </div>
+        <div style="margin-top: 24px;">
+          <label class="subskill-title">Supportive Skills</label>
+          <table style="margin-left: 24px;">
+            <tr><td>English</td><td><div class="score"><span score="80"></span></div></td></tr>
+            <tr><td>UX/UI</td><td><div class="score"><span score="65"></span></div></td></tr>
+            <tr><td>Management tools
+                <span class="skill-tooltip" id="skill-tooltip-1">
+                  <img class="info-image">
+                  <span class="skill-tooltip-text" id="skill-tooltip-1-text">
+                    JIRA<br>
+                    Confluence<br>
+                    Microsoft Word<br>
+                    Microsoft Excel
+                  </span>
+                </span>
+              </td><td><div class="score"><span score="70"></span></div></td>
+            </tr>
+            <tr><td>Visual tools
+                <span class="skill-tooltip" id="skill-tooltip-2">
+                  <img class="info-image">
+                  <span class="skill-tooltip-text" id="skill-tooltip-2-text">
+                    Balsamiq<br>
+                    Figma<br>
+                    Visio<br>
+                    draw.io<br>
+                  </span>
+                </span>
+              </td><td><div class="score"><span score="70"></span></div></td>
+            </tr>
+            <tr><td>Technical
+              <span class="skill-tooltip" id="skill-tooltip-3">
+                <img class="info-image">
+                <span class="skill-tooltip-text" id="skill-tooltip-3-text">
+                  SQL<br>
+                  Python<br>
+                </span>
+              </span>
+            </td><td><div class="score"><span score="30"></span></div></td>
+          </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-content" id="tabs">
+        <div class="tabs-container">
+          <div class="tab-details tab-selected" id="biography-tab">Biography</div>
+          <div class="tab-details" id="project-tab">Projects</div>
+        </div>
+      </div>
+      <div class="section-content" id="biography-content">
+        
+        <div style="width: 1px; height: 24px;"></div>
+        <div class="timeline">
+          <div class="container timeline-left 01" id="01-tma">
+            <div class="content">
+              <h2>TMA Solutions</h2>
+              <h3>2018 - Up to now</h3>
+              <p>Position: Business Analyst</p>
+            </div>
+          </div>
+          <div class="container timeline-right 02" id="02-cnesting">
+            <div class="content">
+              <h2>Cnesting</h2>
+              <h3>2017 - 2018</h3>
+              <p>Position: Business Analyst</p>
+            </div>
+          </div>
+          <div class="container timeline-left 03" id="03-optimus">
+            <div class="content">
+              <h2>Optimus</h2>
+              <h3>2016 - 2017</h3>
+              <p>Position: Member of deployment team</p>
+            </div>
+          </div>
+          <div class="container timeline-right" id="04-accountant">
+            <div class="content">
+              <h2>Hanoi Construction Jsc</h2>
+              <h3>2013 - 2016</h3>
+              <p>Position: Accountant</p>
+            </div>
+          </div>
+          <div class="container timeline-left" id="05-master">
+            <div class="content">
+              <h2>University of Surrey</h2>
+              <h3>2012 - 2013</h3>
+              <p>Master degree in Economy</p>
+            </div>
+          </div>
+          <div class="container timeline-right" id="06-bachelor">
+            <div class="content">
+              <h2>Banking Academy</h2>
+              <h3>2007 - 2011</h3>
+              <p>Bachelor degree in Accounting</p>
+            </div>
+          </div>
+          
+        </div>
+
+      </div>
+      <div class="section-content" id="project-content" style="display:none">
+        
+        <div class="projects-container">
+          <div class="project-details">
+            <label>Documents and training management system</label>
+            <table>
+                <tr>
+                    <td>
+                      <div class="project-attribute">
+                        <img class="company-image"><span>TMA Solutions</span></td>
+                      </div>
+                    <td>
+                      <div class="project-attribute">
+                        <img class="duration-image"><span>35 months +</span></td>
+                      </div>
+                    <td>
+                      <div class="project-attribute">
+                        <img class="position-image"><span>Business Analyst</span></td>
+                      </div>
+                </tr>
+            </table>
+            <p>Enhance and improve an existing system of which the main function is to manage
+                documents and training. Documents and training are deployed to user roles based on
+                the configuration. These audience will need to complete assigned training and/or read
+                and acknowledge documents.<br>                
+                This system is a part of an eco-system that supports clinical trials and studies of
+                various pharmaceutical corporation. Overtime, the system has evolved to include
+                more integration with different third party systems and provide more features to
+                facilitate knowledge sharing and study management.</p>
+          </div>
+          <div class="project-details">
+            <label>AR reconciliation tool</label>
+            <table>
+              <tr>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="company-image"><span>TMA Solutions</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="duration-image"><span>5 months</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="position-image"><span>Business Analyst</span></td>
+                    </div>
+              </tr>
+            </table>
+            <p>Build a tool to support account receivables reconciliation.<br>
+                This tool will get input from SAP system via SFTP. Users can use this tool to distribute
+                money received from customers to various invoices of corresponding customers. Then
+                the reconciliation records will be sent back to SAP system.</p>
+          </div>
+          <div class="project-details">
+            <label>Mobile payment application</label>
+            <table>
+              <tr>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="company-image"><span>TMA Solutions</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="duration-image"><span>10 months</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="position-image"><span>Business Analyst, Scrum Master</span></td>
+                    </div>
+              </tr>
+            </table>
+            <p>Build a mobile application that allows users to borrow money and/or makes payment
+                when they buy goods from partner stores.<br>              
+                This application is integrated with several third party systems, such as banks (to
+                verify users account and get the source of payment) and credit monitoring agencies
+                (to get the credit score of users)
+                </p>
+          </div>
+          <div class="project-details">
+            <label>ERP system (Odoo)</label>
+            <table>
+              <tr>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="company-image"><span>Cnesting</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="duration-image"><span>7 months</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="position-image"><span>Business Analyst</span></td>
+                    </div>
+              </tr>
+            </table>
+            <p>Customize Odoo system to build an accounting system for construction companies.</p>
+          </div>
+          <div class="project-details">
+            <label>ERP system (Oracle EBS)</label>
+            <table>
+              <tr>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="company-image"><span>Optimus</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="duration-image"><span>7 months</span></td>
+                    </div>
+                  <td>
+                    <div class="project-attribute">
+                      <img class="position-image"><span>Deployment Team</span></td>
+                    </div>
+              </tr>
+            </table>
+            <p>Customize and implement Finance module and Inventory module of ERP system.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    /* Image loaded */
+    $(document).ready(function() {
+        $(".company-image").attr("src","file:///D:/Duy/CV/icon/building-F1F1F4.svg");
+        $(".duration-image").attr("src","file:///D:/Duy/CV/icon/clock-F1F1F4.svg");
+        $(".position-image").attr("src","file:///D:/Duy/CV/icon/person%201-F1F1F4.svg");
+        $(".info-image").attr("src","file:///D:/Duy/CV/icon/info%20354259.svg");
+    });
+    /* Skills tooltip */
+    $(document).ready(function () {
+        $(".skill-tooltip").mouseenter(function () {
+        var id = $(this).attr("id");
+        var tooltipText = id.concat("-text");
+        $("#" + tooltipText).css({ "display": "inline" });
+        });
+    });
+    $(document).ready(function () {
+        $(".skill-tooltip").mouseleave(function () {
+        var id = $(this).attr("id");
+        var tooltipText = id.concat("-text");
+        $("#" + tooltipText).css({ "display": "none" });
+        });
+    });
+    /* Position tooltip */
+    $(document).ready(function () {
+        $(".position-details").mouseenter(function () {
+        var id = $(this).attr("id");
+        var tooltipId = id.concat("-tooltip");
+        $("#" + tooltipId).css({ "display": "inline" });
+        });
+    });
+    $(document).ready(function () {
+        $(".position-details").mouseleave(function () {
+        var id = $(this).attr("id");
+        var tooltipId = id.concat("-tooltip");
+        $("#" + tooltipId).css({ "display": "none" });
+        });
+    });
+    /* Animated score */
+    $(".score span").each(function () {
+        var calWidth = (($(this).parent().width() * parseInt($(this).attr("score"))) / 100) - 2;
+        var calWidth100 = (($(this).parent().width() * parseInt($(this).attr("score"))) / 100) - 7;
+        $(this).text($(this).attr("score"));
+        if ($(this).attr("score") == "100") {
+        $(this).css({ "border-top-right-radius": "5px", "border-bottom-right-radius": "5px" });
+        $(this).animate(
+            {
+            width: calWidth100,
+            },
+            1000
+        );
+        } else {
+        $(this).animate(
+            {
+            width: calWidth,
+            },
+            1000
+        );
+        }
+    });
+    /* Switch Biography - Project */
+    $("#project-tab").click(function() {
+        $("#biography-tab").removeClass("tab-selected");
+        $("#project-tab").addClass("tab-selected");
+        $("#biography-content").hide();
+        $("#project-content").show();
+    });
+    $("#biography-tab").click(function() {
+        $("#project-tab").removeClass("tab-selected");
+        $("#biography-tab").addClass("tab-selected");
+        $("#project-content").hide();
+        $("#biography-content").show();
+    });
+  </script>
+</body>
+
+</html>
