@@ -1,9 +1,9 @@
 /* Image loaded */
 $(document).ready(function() {
-    $(".company-image").attr("src","file:///D:/Duy/CV/icon/building-F1F1F4.svg");
-    $(".duration-image").attr("src","file:///D:/Duy/CV/icon/clock-F1F1F4.svg");
-    $(".position-image").attr("src","file:///D:/Duy/CV/icon/person%201-F1F1F4.svg");
-    $(".info-image").attr("src","file:///D:/Duy/CV/icon/info%20354259.svg");
+    $(".company-image").attr("src","https://raw.githubusercontent.com/Mitosama/CV/main/building-F1F1F4.svg");
+      $(".duration-image").attr("src","https://raw.githubusercontent.com/Mitosama/CV/main/clock-F1F1F4.svg");
+      $(".position-image").attr("src","https://raw.githubusercontent.com/Mitosama/CV/main/person%201-F1F1F4.svg");
+      $(".info-image").attr("src","https://raw.githubusercontent.com/Mitosama/CV/main/info%20354259.svg");
   });
   /* Skills tooltip */
   $(document).ready(function () {
